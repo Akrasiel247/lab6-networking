@@ -1,5 +1,5 @@
-#include <iostream>;
-#include "Actor.h";
+#include <iostream>
+#include "Actor.h"
 
 Actor::Actor()
 {
@@ -21,7 +21,7 @@ void Actor::setLife()
 	m_isAlive = !m_isAlive;
 }
 
-bool Actor::isEqual(const Actor a)
+bool Actor::isEqual(const Actor a)//this is probably better of as a =operator overload -R 
 {
 	return m_id==a.m_id;
 }

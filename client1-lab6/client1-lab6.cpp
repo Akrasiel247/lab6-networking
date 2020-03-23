@@ -59,9 +59,7 @@ int main()
 
 		Sleep(500);
 
-		//This is hardcoded in- how can I allocate the mem without knowig the size of the incoming vector?
 		char UxBuffer[9001];
-		//char* buff = (char*)malloc(sizeof(Actor));
 
 		//vector<Actor> gameScene;
 		Actor* gameScene=new Actor[1];
@@ -73,18 +71,21 @@ int main()
 			gameScene = new Actor[num_actors];
 
 			char* buff = (char*)malloc(sizeof(Actor)*num_actors);
+			buff = UxBuffer;
 			
 
 			Actor* act = (Actor*)buff;
-			//memcpy(act, , sizeof(Actor));
+	
 
 
-			cout << num_actors << "This is the number of actors received" << endl;
 
 			for (int i = 0; i < num_actors; ++i) {
-				Actor a;
+
+				Actor a = (*act);
+				cout << a.m_id << endl;
 				act++;
 				gameScene[i]=a;
+				
 			}
 
 		}

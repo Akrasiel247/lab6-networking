@@ -8,28 +8,12 @@
 #include <thread>
 #include <vector>
 #include "Actor.h"
+#include "Serialize.h"
 
 
 
 using namespace std;
 
-
-template <typename T>
-char* convert(T& input) {
-
-	char* t = (char*)malloc(sizeof(input));
-	memcpy(t, &input, sizeof(input));
-
-	return t;
-}
-char* convert(std::vector<Actor>& input) {
-
-	int size_Actors = sizeof(Actor) * input.size();
-	char* t = (char*)malloc(size_Actors);
-	memcpy(t, &input, size_Actors);
-
-	return t;
-}
 
 
 int main()
@@ -60,39 +44,53 @@ int main()
 		cout << "Connecting to server failed!!!\n";
 		return -1;
 	}
-	const int id = 567;
-	Actor z(id, 12, 34, true, true, false);
+	const int id = 456;
+	Actor actor(id, 12, 34, true, true, false);
 
 	while (1)
 	{
 
-		z.setLife();
+		actor.setLife();
 
-		char* t = convert(z);
+		char* t = convert(actor);
 
-		cout << z << endl;
-
-
-		send(ClientSocket, t, sizeof(z), 0);
+		send(ClientSocket, t, sizeof(actor), 0);
 
 
 		Sleep(500);
 
-		char* UxBuffer = (char*)malloc(sizeof(Actor));
+		char UxBuffer[9001];
 
-		vector<Actor> gameScene;
-		Actor a;
+		//vector<Actor> gameScene;
+		Actor* gameScene = new Actor[1];
+		int num_actors =0;
 
-		int n = recv(ClientSocket, UxBuffer, sizeof(Actor), 0);
+		int n = recv(ClientSocket, UxBuffer, sizeof(UxBuffer), 0);
 		if (n > 0) {
+			num_actors = n / sizeof(Actor);
+			gameScene = new Actor[num_actors];
 
-		//	for (int i = 0; i < 2; ++i) {
-				memcpy(&a, UxBuffer, sizeof(Actor));
-				cout << "TTTTTT" << a << endl;
-				gameScene.push_back(a);
+			char* buff = (char*)malloc(sizeof(Actor) * num_actors);
+			buff = UxBuffer;
 
-		//	}
+			Actor* act = (Actor*)buff;
 
+
+			for (int i = 0; i < num_actors; ++i) {
+
+				Actor a = (*act);
+				act++;
+				gameScene[i] = a;
+
+			}
+
+		}
+		else {
+			cout << "Receive failed!!" << endl;
+		}
+
+		for (int i = 0; i < num_actors; ++i) {
+			cout << gameScene[i] << endl;
 		}
 
 	}

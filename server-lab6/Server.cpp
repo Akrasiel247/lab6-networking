@@ -18,8 +18,9 @@ BTN415-Lab 5
 
 using namespace std;
 
-//TODO: serialize and deserialize a vector 
+
 //TODO: Ask Alireza about glm::vec2, how to deserialize a vector when you don't know the size to accept;
+//Issue: When the client exits, they remain in the gamescene- how can this be fixed?
 
 
 std::vector<Actor> gameScene;
@@ -78,7 +79,7 @@ void handle_Client(SOCKET s, int id) { //getting not a socket error
 		send(s, t, y, 0);
 
 		
-		cout << y<< endl;
+		
 	}
 
 
