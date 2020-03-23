@@ -7,12 +7,13 @@
 
 template <typename T>
 char* convert(T& input) {
-
+	
 	char* t = (char*)malloc(sizeof(input));
 	memcpy(t, &input, sizeof(input));
 
 	return t;
 }
+
 
 template<typename T>
 char* convert(std::vector<T>& input) {

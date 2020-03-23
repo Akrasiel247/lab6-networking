@@ -45,13 +45,13 @@ int main()
 		return -1;
 	}
 	const int id = 123;
-	Actor z(id, 12, 34, true, true, false);
+	Actor z(id, 12, 34, true, true, false, 67.00, 90.08);
 
 	while (1)
 	{
-		
+
 		z.setLife();
-		
+
 		char* t = convert(z);
 
 		send(ClientSocket, t, sizeof(z), 0);
@@ -61,31 +61,26 @@ int main()
 
 		char UxBuffer[9001];
 
-		//vector<Actor> gameScene;
-		Actor* gameScene=new Actor[1];
-		int num_actors;
+		vector<Actor> gameScene;
+		//Actor* gameScene = nullptr;
+		int num_actors = 0;
 
 		int n = recv(ClientSocket, UxBuffer, sizeof(UxBuffer), 0);
 		if (n > 0) {
 			num_actors = n / sizeof(Actor);
-			gameScene = new Actor[num_actors];
+			//gameScene = new Actor[num_actors];
 
-			char* buff = (char*)malloc(sizeof(Actor)*num_actors);
+			char* buff = (char*)malloc(sizeof(Actor) * num_actors);
 			buff = UxBuffer;
-			
 
 			Actor* act = (Actor*)buff;
-	
-
-
 
 			for (int i = 0; i < num_actors; ++i) {
 
 				Actor a = (*act);
-				cout << a.m_id << endl;
 				act++;
-				gameScene[i]=a;
-				
+				gameScene.push_back(a);
+
 			}
 
 		}
@@ -93,7 +88,7 @@ int main()
 			cout << "Receive failed!!" << endl;
 		}
 
-		for (int i = 0; i < num_actors;++i) {
+		for (int i = 0; i < num_actors; ++i) {
 			cout << gameScene[i] << endl;
 		}
 

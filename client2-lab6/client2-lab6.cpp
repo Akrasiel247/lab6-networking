@@ -45,42 +45,41 @@ int main()
 		return -1;
 	}
 	const int id = 456;
-	Actor actor(id, 12, 34, true, true, false);
+	Actor z(id, 12, 34, true, true, false, 67.00, 90.08);
 
 	while (1)
 	{
 
-		actor.setLife();
+		z.setLife();
 
-		char* t = convert(actor);
+		char* t = convert(z);
 
-		send(ClientSocket, t, sizeof(actor), 0);
+		send(ClientSocket, t, sizeof(z), 0);
 
 
 		Sleep(500);
 
 		char UxBuffer[9001];
 
-		//vector<Actor> gameScene;
-		Actor* gameScene = new Actor[1];
-		int num_actors =0;
+		vector<Actor> gameScene;
+		//Actor* gameScene = nullptr;
+		int num_actors = 0;
 
 		int n = recv(ClientSocket, UxBuffer, sizeof(UxBuffer), 0);
 		if (n > 0) {
 			num_actors = n / sizeof(Actor);
-			gameScene = new Actor[num_actors];
+			//gameScene = new Actor[num_actors];
 
 			char* buff = (char*)malloc(sizeof(Actor) * num_actors);
 			buff = UxBuffer;
 
 			Actor* act = (Actor*)buff;
 
-
 			for (int i = 0; i < num_actors; ++i) {
 
 				Actor a = (*act);
 				act++;
-				gameScene[i] = a;
+				gameScene.push_back(a);
 
 			}
 

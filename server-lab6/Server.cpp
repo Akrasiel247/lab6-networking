@@ -91,6 +91,7 @@ void handle_Client(SOCKET s, int id) { //getting not a socket error
 
 int main()
 {
+	
 	struct sockaddr_in SvrAddr;				//structure to hold servers IP address-holds param- port num, ip address
 	SOCKET WelcomeSocket, ConnectionSocket;	//socket descriptors
 	WSADATA wsaData;

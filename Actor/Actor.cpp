@@ -3,10 +3,10 @@
 
 Actor::Actor()
 {
-	*this = Actor(0, 0, 0, true, false, false);
+	*this = Actor(0, 0, 0, true, false, false,0,0);
 }
 
-Actor::Actor(int id, float x_pos, float y_pos, bool isAlive, bool isBullet, bool touched)
+Actor::Actor(int id, float x_pos, float y_pos, bool isAlive, bool isBullet, bool touched, float x_dir, float y_dir)
 {
 	m_id = id;
 	m_x_pos = x_pos;
@@ -14,6 +14,10 @@ Actor::Actor(int id, float x_pos, float y_pos, bool isAlive, bool isBullet, bool
 	m_isAlive = isAlive;
 	m_isBullet = isBullet;
 	m_touchedActor = touched;
+	direction.d_x_dir = x_dir;
+	direction.d_y_dir = y_dir;
+
+	
 }
 
 void Actor::setLife()
